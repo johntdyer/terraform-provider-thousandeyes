@@ -2,6 +2,7 @@ package thousandeyes
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -72,6 +73,8 @@ func dataSourceThousandeyesBGPMonitorsRead(d *schema.ResourceData, meta interfac
 	if found == nil {
 		return fmt.Errorf("unable to locate any bgp by name: [%s] or ID: [%d]", searchName, searchMonitorID)
 	}
+
+	log.Printf("[DEBUG] ###### Found BGP Monitor Name: [%s] - ID: [%d]", found.MonitorName, found.MonitorID)
 
 	d.SetId(strconv.Itoa(found.MonitorID))
 	d.Set("rule_name", found.MonitorName)
